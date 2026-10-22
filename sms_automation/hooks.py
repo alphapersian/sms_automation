@@ -16,3 +16,5 @@ automation_events = [
 		}
 	},
 ]
+
+automation_actions = ["sms_automation.actions.SendSMS"]
