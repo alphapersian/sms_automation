@@ -1,33 +1,49 @@
-### Sms Automation
+# SMS Automation
 
-a good app that get\'s your webhooks 
+Frappe app that adds **webhook triggers** to the Frappe Automation engine (Frappe v16+).
 
-### Installation
+## How it works
 
-You can install this app using the [bench](https://github.com/frappe/bench) CLI:
+1. Open **Webhook Endpoint** and create one. A key is generated and the full URL is shown at the top of the form.
+2. An outside system calls the URL:
+
+   ```bash
+   # key in the query string, data in params
+   curl "https://your-site/api/method/sms_automation.api.webhook?key=KEY&phone=0912&message=hi"
+
+   # key in a header, data in a JSON body
+   curl -X POST https://your-site/api/method/sms_automation.api.webhook \
+     -H "X-Webhook-Key: KEY" -H "Content-Type: application/json" \
+     -d '{"phone": "0912", "message": "hi"}'
+   ```
+
+   The key can be sent as `?key=`, `X-Webhook-Key`, or `Authorization: Bearer`.
+3. In an **Automation Flow**, choose trigger **Custom Event** → **Webhook received**. Its actions run when the call arrives.
+
+## Payload available to the flow
+
+| Key | Content |
+| --- | --- |
+| `payload.webhook` | name of the Webhook Endpoint |
+| `payload.params` | query-string params |
+| `payload.form` | form fields |
+| `payload.body` | parsed JSON body |
+| `payload.raw` | raw body when it is neither JSON nor form |
+| `payload.headers` | request headers (credentials removed) |
+| `payload.data` | params, form and JSON body merged (body wins) |
+
+Use a flow condition like `payload.webhook == "sms-replies"` to react to one endpoint only.
+
+## Optional endpoint settings
+
+- **Allowed Method**: restrict to GET, POST, PUT or PATCH.
+- **Link to a Document**: look up a record from the data (e.g. `Lead` where `mobile_no` = `data.from`) and run the flow against it.
+- **Correlation Value Path**: resumes flows waiting on this event (*Wait for Event*) with the same key.
+- **Regenerate Key** invalidates the old URL.
+
+## Installation
 
 ```bash
-cd $PATH_TO_YOUR_BENCH
-bench get-app $URL_OF_THIS_REPO --branch main
-bench install-app sms_automation
+bench get-app https://github.com/alphapersian/sms_automation --branch main
+bench --site your-site install-app sms_automation
 ```
-
-### Contributing
-
-This app uses `pre-commit` for code formatting and linting. Please [install pre-commit](https://pre-commit.com/#installation) and enable it for this repository:
-
-```bash
-cd apps/sms_automation
-pre-commit install
-```
-
-Pre-commit is configured to use the following tools for checking and formatting your code:
-
-- ruff
-- eslint
-- prettier
-- pyupgrade
-
-### License
-
-mit

@@ -5,9 +5,14 @@ app_description = "SMS automation for Frappe"
 app_email = "a.mousavi.bp@gmail.com"
 app_license = "mit"
 
+# Every Webhook Endpoint emits this one event. Pick "Webhook received" as the
+# Custom Event of an Automation Flow, and narrow it with a condition such as
+# `payload.webhook == "my-endpoint"`.
 automation_events = [
-    {"sms.reply_received": {
-        "label": "SMS reply received",
-        "description": "Someone replied to a campaign SMS",
-    }},
+	{
+		"sms_automation.webhook_received": {
+			"label": "Webhook received",
+			"description": "An external system called a Webhook Endpoint URL",
+		}
+	},
 ]

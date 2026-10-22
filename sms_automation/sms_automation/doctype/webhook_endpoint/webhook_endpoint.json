@@ -1,0 +1,166 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "autoname": "field:title",
+ "creation": "2026-10-22 10:00:00.000000",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "title",
+  "enabled",
+  "column_break_main",
+  "allowed_method",
+  "section_url",
+  "key",
+  "section_correlation",
+  "correlation_path",
+  "section_document",
+  "link_doctype",
+  "payload_path",
+  "match_field",
+  "section_activity",
+  "hit_count",
+  "column_break_activity",
+  "last_received_at",
+  "last_payload"
+ ],
+ "fields": [
+  {
+   "fieldname": "title",
+   "fieldtype": "Data",
+   "label": "Name",
+   "reqd": 1,
+   "unique": 1,
+   "in_list_view": 1
+  },
+  {
+   "default": "1",
+   "fieldname": "enabled",
+   "fieldtype": "Check",
+   "label": "Enabled",
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "column_break_main",
+   "fieldtype": "Column Break"
+  },
+  {
+   "default": "Any",
+   "fieldname": "allowed_method",
+   "fieldtype": "Select",
+   "label": "Allowed Method",
+   "options": "Any\nGET\nPOST\nPUT\nPATCH"
+  },
+  {
+   "fieldname": "section_url",
+   "fieldtype": "Section Break",
+   "label": "Webhook URL"
+  },
+  {
+   "fieldname": "key",
+   "fieldtype": "Data",
+   "label": "Key",
+   "read_only": 1,
+   "unique": 1,
+   "no_copy": 1,
+   "description": "Send it as ?key=..., an X-Webhook-Key header or an Authorization: Bearer header."
+  },
+  {
+   "fieldname": "section_correlation",
+   "fieldtype": "Section Break",
+   "label": "Wait for Event"
+  },
+  {
+   "fieldname": "correlation_path",
+   "fieldtype": "Data",
+   "label": "Correlation Value Path",
+   "description": "Dotted path into the received data, e.g. phone or customer.mobile. Resumes Automation flows that wait for this event with the same correlation key."
+  },
+  {
+   "fieldname": "section_document",
+   "fieldtype": "Section Break",
+   "label": "Link to a Document"
+  },
+  {
+   "fieldname": "link_doctype",
+   "fieldtype": "Link",
+   "label": "Document Type",
+   "options": "DocType",
+   "description": "Optional. Find a record to run the Automation Flow against."
+  },
+  {
+   "depends_on": "link_doctype",
+   "fieldname": "payload_path",
+   "fieldtype": "Data",
+   "label": "Value Path",
+   "mandatory_depends_on": "link_doctype",
+   "description": "Dotted path into the received data, e.g. from"
+  },
+  {
+   "depends_on": "link_doctype",
+   "fieldname": "match_field",
+   "fieldtype": "Data",
+   "label": "Match Against Field",
+   "mandatory_depends_on": "link_doctype",
+   "description": "Fieldname on the document type, e.g. mobile_no"
+  },
+  {
+   "collapsible": 1,
+   "fieldname": "section_activity",
+   "fieldtype": "Section Break",
+   "label": "Activity"
+  },
+  {
+   "default": "0",
+   "fieldname": "hit_count",
+   "fieldtype": "Int",
+   "label": "Calls Received",
+   "read_only": 1,
+   "no_copy": 1
+  },
+  {
+   "fieldname": "column_break_activity",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "last_received_at",
+   "fieldtype": "Datetime",
+   "label": "Last Received At",
+   "read_only": 1,
+   "no_copy": 1
+  },
+  {
+   "fieldname": "last_payload",
+   "fieldtype": "Code",
+   "label": "Last Payload",
+   "options": "JSON",
+   "read_only": 1,
+   "no_copy": 1
+  }
+ ],
+ "index_web_pages_for_search": 0,
+ "links": [],
+ "modified": "2026-10-22 10:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "Sms Automation",
+ "name": "Webhook Endpoint",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": [],
+ "title_field": "title"
+}
